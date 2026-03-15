@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PDF Pages to Vercel Blob</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+      pdfjsLib.GlobalWorkerOptions.workerSrc =
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+    </script>
+  </head>
+  <body>
+    <main class="layout">
+      <section class="panel">
+        <p class="kicker">maestrox ocr</p>
+        <h1>Convert PDF pages and upload each image</h1>
+        <p class="sub">
+          Conversion runs fully in your browser. Uploads are sent directly from your browser to Vercel Blob.
+        </p>
+
+        <form id="pdf-form" class="form">
+          <input id="pdf-file" type="file" accept="application/pdf" required />
+          <button id="submit-btn" type="submit">Convert and upload</button>
+        </form>
+
+        <section class="status-wrap">
+          <p id="status">Waiting for file selection.</p>
+          <div class="bar-track" aria-hidden="true"><span id="bar"></span></div>
+        </section>
+
+        <ol id="results" class="results"></ol>
+      </section>
+    </main>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
