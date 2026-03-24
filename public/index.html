@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PDF Pages to Vercel Blob</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="stylesheet" href="/styles.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script>
@@ -18,6 +19,9 @@
         <h1>Convert PDF pages and upload each image</h1>
         <p class="sub">
           Conversion runs fully in your browser. Uploads are sent directly from your browser to Vercel Blob.
+        </p>
+        <p class="sub">
+          Direct Vercel Blob client uploads require a public Blob store. If your store is private, this flow will fail and you need either a public store or a server-side upload flow.
         </p>
 
         <form id="pdf-form" class="form">

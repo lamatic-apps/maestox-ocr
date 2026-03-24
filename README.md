@@ -12,6 +12,7 @@ This app does the following:
 - Node.js 18+
 - A Vercel project with a Blob store
 - `BLOB_READ_WRITE_TOKEN` from that project
+- A public Vercel Blob store for direct browser uploads
 
 ## Setup
 
@@ -53,3 +54,13 @@ npm run dev
 ## Important note
 
 For production, add auth/authorization checks in `/api/blob/upload` before issuing upload tokens.
+
+## Direct upload limitation
+
+This implementation uses Vercel Blob client uploads, which currently require `access: "public"`.
+
+If your Blob store is private:
+
+- Direct browser uploads will fail.
+- The browser may only show a generic CORS or failed fetch error.
+- You must either change the Blob store to public or change the app to upload through your server instead.

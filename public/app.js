@@ -1,4 +1,4 @@
-import { upload } from "https://esm.sh/@vercel/blob/client@1.0.1";
+import { upload } from "https://esm.sh/@vercel/blob@1.1.1/client";
 
 const form = document.getElementById("pdf-form");
 const fileInput = document.getElementById("pdf-file");
@@ -51,6 +51,20 @@ function appendResult({ page, url, error }) {
 function baseNameFromFile(fileName) {
   const noExt = fileName.replace(/\.pdf$/i, "");
   return noExt.trim().replace(/[^a-zA-Z0-9-_]/g, "-").slice(0, 60) || "pdf";
+}
+
+function getUploadErrorMessage(error) {
+  const message = error instanceof Error ? error.message : String(error || "Upload failed");
+
+  if (/Failed to fetch|Load failed|NetworkError/i.test(message)) {
+    return "Direct browser upload failed. Your Vercel Blob store is likely private. Client-side Vercel uploads require a public store.";
+  }
+
+  if (/private store|access must be \"public\"|Cannot use public access on a private store/i.test(message)) {
+    return "Your Vercel Blob store is private. Change the store to public or switch this app to server-side uploads.";
+  }
+
+  return message;
 }
 
 async function canvasToPngBlob(canvas) {
@@ -129,7 +143,7 @@ form.addEventListener("submit", async (event) => {
         const uploaded = await uploadPage(pageFile, pageNumber);
         appendResult({ page: pageNumber, url: uploaded.url });
       } catch (error) {
-        const message = error instanceof Error ? error.message : "Upload failed";
+        const message = getUploadErrorMessage(error);
         appendResult({ page: pageNumber, error: message });
       }
 

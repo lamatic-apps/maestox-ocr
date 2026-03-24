@@ -11,6 +11,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.use(express.json({ limit: "1mb" }));
+app.get("/favicon.ico", (_req, res) => {
+  res.redirect(302, "/favicon.svg");
+});
 app.use(express.static(path.join(__dirname, "public")));
 
 app.post("/api/blob/upload", async (req, res) => {
@@ -48,6 +51,11 @@ app.post("/api/blob/upload", async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`App running at http://localhost:${port}`);
-});
+// Local dev only — Vercel uses the exported handler
+if (process.env.NODE_ENV !== "production") {
+  app.listen(port, () => {
+    console.log(`App running at http://localhost:${port}`);
+  });
+}
+
+export default app;
